@@ -1,0 +1,44 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production / vercel
+/build
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# env
+.env
+.env.*
+!.env.example
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# os / editor / tooling
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+.claude/
+
+# berkas referensi desain (tidak dipakai aplikasi)
+/ui-reference.png
+
+# berkas asli unggahan yang sudah dikonversi ke public/img/proyek dan logo/*.png
+/public/img/logo/*-project.png
+/public/img/logo/bangkit.jpg
+/public/img/logo/dicoding.jpeg
+/public/img/logo/sobat sehat.svg
+/public/img/logo/jarvis.png
