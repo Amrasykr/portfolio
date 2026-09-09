@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
 import { ImageResponse } from "next/og";
 import { profile } from "@/data/content";
 import { ui } from "@/data/ui";
@@ -6,7 +8,17 @@ export const alt = ui.pageTitle;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpenGraphImage() {
+/* Kartu pratinjau tautan: foto profil + nama + peran, warna merek (navy/biru muda favicon). */
+export default async function OpenGraphImage() {
+  const lang = ui.defaultLang;
+  let photo: string | null = null;
+  try {
+    const buf = await readFile(path.join(process.cwd(), "public", "img", profile.avatar));
+    photo = `data:image/jpeg;base64,${buf.toString("base64")}`;
+  } catch {
+    photo = null; // tanpa foto bila berkas belum ada
+  }
+
   return new ImageResponse(
     (
       <div
@@ -14,29 +26,29 @@ export default function OpenGraphImage() {
           width: "100%",
           height: "100%",
           display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-end",
-          padding: 72,
-          background: "#141416",
-          color: "#f2f3f5",
+          alignItems: "center",
+          gap: 64,
+          padding: "0 88px",
+          background: "#05283A", /* polos: PNG lebih kecil (WhatsApp membatasi ±300 KB) */
+          color: "#ffffff",
           fontFamily: "sans-serif",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 18,
-            padding: 40,
-            border: "1px solid rgba(255,255,255,0.09)",
-            borderRadius: 20,
-            background: "rgba(255,255,255,0.055)",
-          }}
-        >
-          <div style={{ fontSize: 64, fontWeight: 700, lineHeight: 1.1 }}>{profile.name}</div>
-          <div style={{ fontSize: 32, color: "#a8adb5" }}>
-            {`${profile.role[ui.defaultLang]} · ${profile.location[ui.defaultLang]}`}
-          </div>
+        {photo && (
+          <img
+            src={photo}
+            width={320}
+            height={320}
+            alt=""
+            style={{ width: 320, height: 320, objectFit: "cover", borderRadius: 48, border: "6px solid rgba(144,210,245,0.45)" }}
+          />
+        )}
+        <div style={{ display: "flex", flexDirection: "column", gap: 18, flex: 1 }}>
+          <div style={{ fontSize: 26, letterSpacing: 6, color: "#90D2F5", fontWeight: 700 }}>PORTFOLIO</div>
+          <div style={{ fontSize: 82, fontWeight: 800, lineHeight: 1.05 }}>{profile.name}</div>
+          <div style={{ fontSize: 42, fontWeight: 600, color: "#90D2F5" }}>{profile.role[lang]}</div>
+          <div style={{ fontSize: 30, color: "rgba(255,255,255,0.75)", marginTop: 10 }}>{profile.location[lang]}</div>
+          <div style={{ fontSize: 28, color: "rgba(255,255,255,0.9)" }}>{profile.links.email}</div>
         </div>
       </div>
     ),

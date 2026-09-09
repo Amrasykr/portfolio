@@ -8,6 +8,11 @@ export const ui = {
   /** Bahasa awal sebelum ada pilihan tersimpan (permintaan pemilik: Inggris; PROMPT.md asal: "id"). */
   defaultLang: "en" as Lang,
   pageTitle: "Ammar Asysyakur — Full Stack Developer",
+  /** Deskripsi meta/OG pendek (≤120 karakter) — pratinjau WhatsApp/LinkedIn memotong yang panjang. */
+  metaDescription: {
+    id: "Full Stack Developer — Laravel, Next.js, NestJS. Merilis HRIS untuk ±1.000 pengguna, aplikasi internal, dan produk klien.",
+    en: "Full Stack Developer — Laravel, Next.js, NestJS. Shipped an HRIS for ~1,000 users, internal apps, and client products.",
+  } as T,
   langCode: { id: "ID", en: "EN" } as const,
 
   workWithMe: { id: "Kerja sama dengan saya", en: "Work with me" } as T,
